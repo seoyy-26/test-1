@@ -1,0 +1,109 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+
+<!-- Main -->
+<section id="main">
+    <div class="container">
+        <div class="row">
+
+            <!-- Content -->
+            <div id="content" class="col-8 col-12-medium">
+
+                <!-- Post -->
+                <article class="box post">
+                    <header>
+                        <h2><strong>동아리명</strong></h2>
+                    </header>
+                    <span class="image featured"><img src="{%static 'images/pic04.jpg' %}" alt="" /></span>
+                    <h3>동아리 한줄소개</h3>
+                    <p>내용1</p>
+                    <h3>동아리 소개</h3>
+                    <p>내용2</p>
+                    <h3>현재 활동인원</h3>
+                    <p>내용3</p>
+                    <h3>지원방법</h3>
+                    <p>내용4</p>
+                    <h3>회장의 한마디</h3>
+                    <p>내용5</p>
+                </article>
+
+            </div>
+
+            <!-- Sidebar -->
+            <div id="sidebar" class="col-4 col-12-medium">
+
+                <!-- Excerpts -->
+                <section>
+                    <ul class="divided">
+                        <li>
+
+                            <!-- Excerpt -->
+                            <article class="box excerpt">
+                                <header>
+                                    <span class="date">SNS</span>
+                                </header>
+                                <div class="col-6 col-12-small">
+                                    <ul class="icons">
+                                        <a href="#"></a>
+                                        <li class="icon brands fa-twitter"></a>
+                                            <a href="#">@untitled</a>
+                                        </li>
+                                        <li class="icon brands fa-instagram">
+                                            <a href="#">instagram.com/untitled</a>
+                                        </li>
+                                        <li class="icon brands fa-dribbble">
+                                            <a href="#">dribbble.com/untitled</a>
+                                        </li>
+                                        <li class="icon brands fa-facebook-f">
+                                            <a href="#">facebook.com/untitled</a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </article>
+
+                        </li>
+                    </ul>
+                </section>
+
+                <!-- Highlights -->
+                <section>
+                    <ul class="divided">
+                        <li>
+
+                            <!-- Highlight -->
+                            <article class="box highlight">
+                                <header>
+                                    <h3><a href="#">Q&A</a></h3>
+                                </header>
+                                <p>내용</p>
+                                <ul class="actions">
+                                    <li><a href="#" class="button icon solid fa-file">More</a></li>
+                                </ul>
+                            </article>
+
+                        </li>
+                        <li>
+
+                            <!-- Highlight -->
+                            <article class="box highlight">
+                                <header>
+                                    <h3><a href="#">Review</a></h3>
+                                </header>
+                                <p>내용</p>
+                                <ul class="actions">
+                                    <li><a href="#" class="button icon solid fa-file">More</a></li>
+                                </ul>
+                            </article>
+
+                        </li>
+                    </ul>
+                </section>
+
+            </div>
+
+        </div>
+    </div>
+</section>
+</body>
+{% endblock %}

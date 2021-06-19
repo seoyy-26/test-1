@@ -9,4 +9,5 @@ urlpatterns = [
     path('no_sidebar/', no_sidebar, name="no_sidebar"),
     path('right_sidebar/', right_sidebar, name="right_sidebar"),
 
+
 ]
