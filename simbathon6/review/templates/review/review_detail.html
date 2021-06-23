@@ -1,0 +1,79 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!--라디오버튼-->
+<style>
+    div.radio-wrap {
+        display: inline-flex;
+    }
+
+    input[type='radio'],
+    input[type='radio']:checked {
+        appearance: none;
+        width: 0.9rem;
+        height: 0.9rem;
+        border-radius: 100%;
+        margin-right: 0.1rem;
+    }
+
+    input[type='radio'] {
+        background-color: #e8e8e8;
+        border: 2px solid;
+    }
+
+    input[type='radio']:checked {
+        background-color: #ed786a;
+    }
+</style>
+
+<!-- 본문내용 -->
+<section id="main">
+    <div class="container">
+        <div class="row">
+        </div>
+
+        <!-- Content -->
+        <div id="content" class="col-8 col-12-medium imp-medium">
+
+            <!-- Post -->
+            <article class="box post">
+                <header>
+                    <h1> <strong>{{review.title}}</strong></h1><br />
+                </header>
+
+                작성자 : {{review.writer}}<br>
+                날짜 : {{review.pub_date}}<br>
+                동아리 활동시기 : {{review.활동시기}}
+                <hr>
+                <p>{{review.body}}</p>
+                <hr>
+
+                {% if review.추천의사 == '비추천' %}
+                <div class="radio-wrap">
+                    <p>추천의사 :
+                        <input type="radio" name="추천의사" value="추천" disabled>추천
+                        <input type="radio" name="추천의사" value="비추천" checked onlclk="return(false)">비추천
+                    </p>
+                </div><br>
+                {% else %}
+                <div class="radio-wrap">
+                    <p>추천의사 :
+                        <input type="radio" name="추천의사" value="추천" checked onlclk="return(false)">추천
+                        <input type="radio" name="추천의사" value="비추천" onlclk="return(false)" disabled>비추천
+                    </p>
+                </div><br>
+                {% endif %}
+
+                <a href="{% url 'review:review_edit' review.id %}">수정하기</a>
+                <a href="{% url 'review:review_delete' review.id %}">삭제하기</a>
+                <div>
+
+            </article>
+        </div>
+    </div>
+    </div>
+    </div>
+</section>
+
+{% endblock %}
