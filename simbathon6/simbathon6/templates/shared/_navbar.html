@@ -120,7 +120,6 @@
             <a href="#" class="icon fa-chart-bar"><span>Account</span></a>
             <ul>
             {%if user.is_authenticated%}
-                {% comment %} <li><a href="{% url 'users:mypage'%}">Mypage</a></li> {% endcomment %}
                 <li><a href="{% url 'account_logout'%}">Logout</a></li>
             {%else%}
                 <li><a href="{% url 'account_login'%}">Login</a></li>
@@ -129,8 +128,13 @@
             </ul>
         </li>
 
+<<<<<<< HEAD
         <li><a class="icon solid fa-cog" href="{% url 'main:left_sidebar' %}"><span>Q&A Board</span></a></li>
         <li><a class="icon solid fa-retweet" href="{% url 'main:right_sidebar' %}"><span>Right Sidebar</span></a></li>
+=======
+        <li><a class="icon solid fa-cog" href="{% url 'main:left_sidebar' %}"><span>Left Sidebar</span></a></li>
+        <li><a class="icon solid fa-retweet" href="{% url 'review:showreview' %}"><span>Review</span></a></li>
+>>>>>>> aaa52906b6e2829a072038bb4411d0711d0b5223
         <li><a class="icon solid fa-sitemap" href="{% url 'main:no_sidebar' %}"><span>No Sidebar</span></a></li>
     </ul>
 </nav>
