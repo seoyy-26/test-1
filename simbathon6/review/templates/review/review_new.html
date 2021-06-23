@@ -1,0 +1,158 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<!--라디오버튼-->
+<style>
+   div.radio-wrap {
+  display: inline-flex;
+}
+
+input[type='radio'],
+input[type='radio']:checked {
+  appearance: none;
+  width: 0.9rem;
+  height: 0.9rem;
+  border-radius: 100%;
+  margin-right: 0.1rem;
+}
+
+input[type='radio'] {
+  background-color: #e8e8e8;
+  border: 2px solid;
+}
+input[type='radio']:checked {
+  background-color:#ed786a;
+}
+</style>
+
+<!-- 본문내용 -->
+<section id="main">
+    <div class="container">
+        <div class="row">
+        </div>
+
+        <!-- Content -->
+        <div id="content" class="col-8 col-12-medium imp-medium">
+
+            <!-- Post -->
+            <article class="box post">
+                <header>
+                    <h1> <strong>후기 작성하기</strong></h1><br>
+                    <hr>
+                </header>
+                <div>
+                    <form action="{%url 'review:review_create'%}" method="post" enctype="multipart/form-data">
+                        {%csrf_token%}
+                        <label>동아리명</label>
+                        <div>
+                            <select name="category" id="category" class="review_category" style="color: black">
+
+                                <optgroup label="공연분과">
+                                    <option value="극예술연구회">극예술연구회</option>
+                                    <option value="로터스">로터스</option>
+                                    <option value="뭉게구름">뭉게구름</option>
+                                    <option value="아리랑">아리랑</option>
+                                    <option value="음샘">음샘</option>
+                                    <option value="피어리스던">피어리스던</option>
+                                    <option value="현여울">현여울</option>
+                                    <option value="AJAX">AJAX</option>
+                                    <option value="HOLA">HOLA</option>
+                                    <option value="ODC">ODC</option>
+                                    <option value="OPUS">OPUS</option>
+                                </optgroup>
+
+                                <optgroup label="봉사분과">
+                                    <option value="길">길</option>
+                                    <option value="손짓사랑회">손짓사랑회</option>
+                                    <option value="젊은새이웃">젊은새이웃</option>
+                                    <option value="페인터즈">페인터즈</option>
+                                    <option value="푸름누리">푸름누리</option>
+                                    <option value="한글학교하람">한글학교하람</option>
+                                    <option value="ELF">E.L.F.</option>
+                                    <option value="RCY">RCY</option>
+                                </optgroup>
+
+                                <optgroup label="사회분과">
+                                    <option value="동국불교학생회">동국불교학생회</option>
+                                    <option value="프론티어">프론티어</option>
+                                    <option value="KUSA">KUSA</option>
+                                    <option value="RICH">RICH</option>
+                                    <option value="UNSA">UNSA</option>
+                                </optgroup>
+
+                                <optgroup label="신규분과">
+                                    <option value="두둠칫">두둠칫</option>
+                                    <option value="멋쟁이사자처럼">멋쟁이사자처럼</option>
+                                    <option value="인액터스">인액터스</option>
+                                    <option value="잼잼">잼잼</option>
+                                    <option value="FC엘레펜테">FC엘레펜테</option>
+                                    <option value="QUD">QUD</option>
+                                </optgroup>
+
+                                <optgroup label="연구분과">
+                                    <option value="경영학연구회">경영학연구회</option>
+                                    <option value="경제학연구회">경제학연구회</option>
+                                    <option value="국제통상연구회">국제통상연구회</option>
+                                    <option value="정치학연구회">정치학연구회</option>
+                                </optgroup>
+
+                                <optgroup label="예창분과">
+                                    <option value="그리고그림">그리고그림</option>
+                                    <option value="동국문학회">동국문학회</option>
+                                    <option value="동국서도회">동국서도회</option>
+                                    <option value="동그라미">동그라미</option>
+                                    <option value="디딤돌">디딤돌</option>
+                                    <option value="만화얼">만화얼</option>
+                                    <option value="애드러쉬">애드러쉬</option>
+                                </optgroup>
+
+                                <optgroup label="체육제1분과">
+                                    <option value="기우회">기우회</option>
+                                    <option value="명궁">명궁</option>
+                                    <option value="선무부">선무부</option>
+                                    <option value="터스커스">터스커스</option>
+                                    <option value="COURTIST">COURTIST</option>
+                                    <option value="DUTC">DUTC</option>
+                                    <option value="FC_TOTO">FC_TOTO</option>
+                                    <option value="LAE">L.A.E.</option>
+                                </optgroup>
+
+                                <optgroup label="체육제2분과">
+                                    <option value="동국탐험연구회">동국탐험연구회</option>
+                                    <option value="무법">무법</option>
+                                    <option value="바람소리">바람소리</option>
+                                    <option value="산악부">산악부</option>
+                                    <option value="수중탐구연구회">수중탐구연구회</option>
+                                    <option value="DUST">DUST</option>
+                                </optgroup>
+
+                                <optgroup label="학술분과">
+                                    <option value="맑스철학연구회">맑스철학연구회</option>
+                                    <option value="CAFE_IN">CAFE_IN</option>
+                                    <option value="DNA">DNA</option>
+                                    <option value="DUSSA">DUSSA</option>
+                                    <option value="KCC">KCC</option>
+                                    <option value="MECS">MECS</option>
+                                    <option value="NSA">NSA</option>
+                                </optgroup>
+                            </select>
+                        </div>
+
+                        <!-- 후기 내용작성부분 -->
+                        <p>제목 : <input type="text" name="title"></p>
+                        <p>활동시기 : <input type="text" name="활동시기"></p>
+                        <p>내용 : <textarea type="text" name="body" id="" cols="30" rows="10"></textarea></p>
+                        <div class="radio-wrap">
+                        <p>추천의사 :
+                            <input type="radio" id="추천" name="추천의사" value="추천" checked="checked">추천
+                            <input type="radio" id="비추천" name="추천의사" value="비추천">비추천
+                        </p></div><br>
+                        <button type="submit">제출</button>
+                    </form>
+            </article>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
