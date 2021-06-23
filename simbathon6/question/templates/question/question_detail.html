@@ -1,0 +1,38 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+<!-- 본문내용 -->
+<section id="main">
+    <div class="container">
+        <div class="row">
+
+        </div>
+             <!-- Content -->
+          <div id="content" class="col-8 col-12-medium imp-medium">
+              <!-- Post -->
+                <article class="box post">
+                  <header>
+                        <h1> <strong>{{question.title}}</strong></h1><br />
+                  </header>
+
+                     작성자 : {{question.writer}}<br>
+                     날짜 : {{question.pub_date}}<br>
+                     <hr>
+                     <p>{{question.body}}</p>
+                     <hr>
+
+
+                     <a href="{% url 'question:question_edit' question.id %}">수정하기</a>
+                     <a href="{% url 'question:question_delete' question.id %}">삭제하기</a>
+                
+                </article>
+          </div>
+
+       
+    </div>
+</section>
+
+{% endblock %} 

@@ -1,0 +1,63 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+{% include 'question/question_sidebar.html' %}
+
+<section id="main">
+    <div class="container">
+        <div class="row">
+        </div>
+
+        <!-- Content -->
+        <div id="content" class="col-8 col-12-medium imp-medium">
+
+            <!-- Post -->
+            <article class="box post">
+
+                <header>
+                    <h2> <strong>Q&A</strong><br />
+                </header>
+                {% if user.is_authenticated %}
+                <ul class="actions">
+                    <li><a href="{% url 'question:question_new' %}" class="button icon solid fa-file">게시글 추가</a></li>
+                </ul>
+
+                <!--게시판 -->
+                <table class="table table-sm">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">동아리명</th>
+                            <th scope="col">제목</th>
+                            <th scope="col">내용</th>
+                            <th scope="col">작성자</th>
+                            <th scope="col">작성날짜</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        {% for question in questions %}
+                        <tr>
+                            <th scope="row">{{question.id}}</th>
+                            <td>{{question.category}}</td>
+                            <td><a href="{% url 'question:question_detail' question.id %}">{{question.title}}</a></td>
+                            <td>{{question.summary}}</td>
+                            <td>{{question.writer}}</td>
+                            <td>{{question.pub_date}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+                {% else %}
+                <h3>로그인 후 이용가능</h3>
+                <ul class="actions">
+                    <li><a href="{% url 'account_login'%}" class="button icon solid fa-file">로그인</a></li>
+                    <li><a href="{% url 'account_signup'%}" class="button icon solid fa-file">회원가입</a></li>
+                </ul>
+                {% endif %}
+            </article>
+        </div>
+    </div>
+    </div>
+</section>
+{% endblock %} 

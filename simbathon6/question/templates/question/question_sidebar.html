@@ -1,0 +1,164 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="{% static 'css/sidebar.css' %}">
+</head>
+
+<!--  sidebar  -->
+
+<body>
+  <div id="mySidenav" class="sidenav">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+
+    <a href="{% url 'question:showquestion' %}"><strong>전체</strong></a>
+    <button class="dropdown-btn">공연분과
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <a href="{% url 'question:로터스'%}">로터스</a>
+      <a href="{% url 'question:극예술연구회' %}">극예술연구회</a>
+      <a href="{% url 'question:뭉게구름' %}">뭉게구름</a>
+      <a href="{% url 'question:아리랑' %}">아리랑</a>
+      <a href="{% url 'question:음샘' %}">음샘</a>
+      <a href="{% url 'question:피어리스던' %}">피어리스던</a>
+      <a href="{% url 'question:현여울' %}">현여울</a>
+      <a href="{% url 'question:AJAX' %}">AJAX</a>
+      <a href="{% url 'question:HOLA' %}">HOLA</a>
+      <a href="{% url 'question:ODC' %}">ODC</a>
+      <a href="{% url 'question:OPUS' %}">OPUS</a>
+    </div>
+
+    <button class="dropdown-btn">봉사분과
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <li><a href="{% url 'question:길'%}">길</a></li>
+      <a href="{% url 'question:손짓사랑회'%}">손짓사랑회</a>
+      <a href="{% url 'question:젊은새이웃'%}">젊은새이웃</a>
+      <a href="{% url 'question:페인터즈'%}">페인터즈</a>
+      <a href="{% url 'question:푸름누리'%}">푸름누리</a>
+      <a href="{% url 'question:한글학교하람'%}">한글학교하람</a>
+      <a href="{% url 'question:ELF'%}">E.L.F</a>
+      <a href="{% url 'question:RCY'%}">RCY</a>
+    </div>
+
+    <button class="dropdown-btn">사회분과
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <a href="{% url 'question:동국불교학생회'%}">동국불교학생회</a>
+      <a href="{% url 'question:프론티어'%}">프론티어</a>
+      <a href="{% url 'question:KUSA'%}">KUSA</a>
+      <a href="{% url 'question:RICH'%}">RICH</a>
+      <a href="{% url 'question:UNSA'%}">UNSA</a>
+    </div>
+
+    <button class="dropdown-btn">신규분과
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <li><a href="{% url 'question:두둠칫'%}">두둠칫</a></li>
+      <a href="{% url 'question:멋쟁이사자처럼'%}">멋쟁이사자처럼</a>
+      <a href="{% url 'question:인액터스'%}">인액터스</a>
+      <a href="{% url 'question:잼잼'%}">잼잼</a>
+      <a href="{% url 'question:FC엘레펜테'%}">FC엘레펜테</a>
+      <a href="{% url 'question:QUD'%}">QUD</a>
+    </div>
+
+    <button class="dropdown-btn">연구분과
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <a href="{% url 'question:경영학연구회'%}">경영학연구회</a>
+      <a href="{% url 'question:경제학연구회'%}">경제학연구회</a>
+      <a href="{% url 'question:국제통상연구회'%}">국제통상연구회</a>
+      <a href="{% url 'question:정치학연구회'%}">정치학연구회</a>
+    </div>
+
+    <button class="dropdown-btn">예창분과
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <li><a href="{% url 'question:그리고그림'%}">그리고그림</a></li>
+      <a href="{% url 'question:동국문학회'%}">동국문학회</a>
+      <a href="{% url 'question:동국서도회'%}">동국서도회</a>
+      <a href="{% url 'question:동그라미'%}">동그라미</a>
+      <a href="{% url 'question:디딤돌'%}">디딤돌</a>
+      <a href="{% url 'question:만화얼'%}">만화얼</a>
+      <a href="{% url 'question:애드러쉬'%}">애드러쉬</a>
+    </div>
+
+    <button class="dropdown-btn">체육제1분과
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <a href="{% url 'question:기우회'%}">기우회</a>
+      <a href="{% url 'question:명궁'%}">명궁</a>
+      <a href="{% url 'question:선무부'%}">선무부</a>
+      <a href="{% url 'question:터스커스'%}">터스커스</a>
+      <a href="{% url 'question:COURTIST'%}">COURTIST</a>
+      <a href="{% url 'question:DUTC'%}">DUTC</a>
+      <a href="{% url 'question:FC_TOTO'%}">FC_TOTO</a>
+      <a href="{% url 'question:LAE'%}">L.A.E</a>
+    </div>
+
+    <button class="dropdown-btn">체육제2분과
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <a href="{% url 'question:동국탐험연구회'%}">동국탐험연구회</a>
+      <a href="{% url 'question:무법'%}">무법</a>
+      <a href="{% url 'question:바람소리'%}">바람소리</a>
+      <a href="{% url 'question:산악부'%}">산악부</a>
+      <a href="{% url 'question:수중탐구연구회'%}">수중탐구연구회</a>
+      <a href="{% url 'question:DUST'%}">DUST</a>
+    </div>
+
+    <button class="dropdown-btn">학술분과
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-container">
+      <a href="{% url 'question:CAFE_IN'%}">CAFE_IN</a>
+      <a href="{% url 'question:맑스철학연구회'%}">맑스철학연구회</a>
+      <a href="{% url 'question:DNA'%}">DNA</a>
+      <a href="{% url 'question:DUSSA'%}">DUSSA</a>
+      <a href="{% url 'question:KCC'%}">KCC</a>
+      <a href="{% url 'question:MECS'%}">MECS</a>
+      <a href="{% url 'question:NSA'%}">NSA</a>
+    </div>
+  </div>
+
+
+  <!-- navbar open 버튼 -->
+  <span style="font-size:25px;cursor:pointer" onclick="openNav()">&#9776; 동아리목록</span>
+
+  <!--  script부분  -->
+  <script>
+    function openNav() {
+      document.getElementById("mySidenav").style.width = "170px"; /* sidebar 넓이*/
+    }
+    function closeNav() {
+      document.getElementById("mySidenav").style.width = "0";
+    }
+    /* Loop through all dropdown buttons to toggle between hiding and showing its dropdown content - This allows the user to have multiple dropdowns without any conflict */
+    var dropdown = document.getElementsByClassName("dropdown-btn");
+    var i;
+    for (i = 0; i < dropdown.length; i++) {
+      dropdown[i].addEventListener("click", function () {
+        this.classList.toggle("active");
+        var dropdownContent = this.nextElementSibling;
+        if (dropdownContent.style.display === "block") {
+          dropdownContent.style.display = "none";
+        } else {
+          dropdownContent.style.display = "block";
+        }
+      });
+    }
+
+  </script>
+</body>
+
+</html> 
