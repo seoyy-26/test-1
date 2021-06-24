@@ -76,7 +76,7 @@ class Question(models.Model):
         ('KCC','KCC'), 
         ('MECS','MECS'), 
         ('NSA','NSA'),
-            ]
+    ]
 
 
     category = models.CharField(choices=QUESTION_CATEGORY_CHOICES, max_length=300)
@@ -94,3 +94,8 @@ class Question(models.Model):
 
     def summary(self):
         return self.body[:10] 
+
+class Answer(models.Model):
+    question = models.ForeignKey(Question, on_delete=models.CASCADE)
+    content = models.TextField()
+    create_date = models.DateTimeField()
