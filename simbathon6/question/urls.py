@@ -10,6 +10,7 @@ urlpatterns = [
     path('question_edit/<str:id>', question_edit, name="question_edit"),
     path('question_update/<str:id>', question_update, name="question_update"),
     path('question_delete/<str:id>', question_delete, name="question_delete"),
+    path('answer_create/<int:id>', answer_create, name="answer_create"),
     
     path('극예술연구회/',극예술연구회,name="극예술연구회"),
     path('로터스/',로터스,name="로터스"),

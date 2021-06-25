@@ -1,3 +1,4 @@
+from datetime import time
 from django.shortcuts import render, redirect, get_object_or_404
 from .models import Question
 from django.utils import timezone
@@ -42,6 +43,11 @@ def question_delete(request, id):
     delete_question = Question.objects.get(id=id)
     delete_question.delete()
     return redirect('question:showquestion')
+
+def answer_create(request, id):
+    question = get_object_or_404(Question, pk=id)
+    question.answer_set.create(body=request.POST.get('body'), create_date=timezone.now())
+    return redirect('question:question_detail', id=id)
 
 
 #동아리별 연결
