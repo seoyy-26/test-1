@@ -7,9 +7,9 @@ urlpatterns = [
     path('<str:id>', question_detail, name= "question_detail"),
     path('question_new/', question_new, name="question_new"),
     path('question_create/', question_create, name="question_create"),
-    path('question/<str:id>', question_edit, name="question_edit"),
-    path('question/<str:id>', question_update, name="question_update"),
-    path('question/<str:id>', question_delete, name="question_delete"),
+    path('question_edit/<str:id>', question_edit, name="question_edit"),
+    path('question_update/<str:id>', question_update, name="question_update"),
+    path('question_delete/<str:id>', question_delete, name="question_delete"),
     
     path('극예술연구회/',극예술연구회,name="극예술연구회"),
     path('로터스/',로터스,name="로터스"),

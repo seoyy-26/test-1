@@ -24,11 +24,20 @@
                      <p>{{question.body}}</p>
                      <hr>
 
-
+                    {% if user == question.writer %}
                      <a href="{% url 'question:question_edit' question.id %}">수정하기</a>
                      <a href="{% url 'question:question_delete' question.id %}">삭제하기</a>
-                
+                    {% endif %}
                 </article>
+              <!-- 선택된 select 값 고정 -->
+              <script>
+                var obj = document.getElementById("category");
+                for (i = 0; i < obj.options.length; i++) {
+                  if (obj.options[i].value == "{{question.category}}") {
+                    obj.selectedIndex = i;
+                  }
+                }
+              </script>
           </div>
 
        

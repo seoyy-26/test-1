@@ -16,11 +16,11 @@ def question_new(request):
 
 def question_create(request):
     new_question=Question()
-    new_question.title = request.POST['title']
-    new_question.category = request.POST['category']
+    new_question.title = request.GET['title']
+    new_question.category = request.GET['category']
     new_question.writer = request.user
     new_question.pub_date = timezone.now()
-    new_question.body = request.POST['body']
+    new_question.body = request.GET['body']
     new_question.save()
     return redirect('question:question_detail', new_question.id)
 

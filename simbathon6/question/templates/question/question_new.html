@@ -20,7 +20,7 @@
                     <hr>
                 </header>
                 <div>
-                    <form action="{%url 'question:question_create'%}" method="post" enctype="multipart/form-data">
+                    <form action="{%url 'question:question_create'%}" method="POST" enctype="multipart/form-data">
                         {%csrf_token%}
                         <label>동아리명</label>
                         <div>
