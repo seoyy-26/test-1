@@ -40,7 +40,7 @@
                         <tr>
                             <th scope="row">{{question.id}}</th>
                             <td>{{question.category}}</td>
-                            <td><a href="{% url 'question:question_detail question.id %}">{{question.title}}</a></td>
+                            <td><a href="{% url 'question:question_detail' question.id %}">{{question.title}}</a></td>
                             <td>{{question.summary}}</td>
                             <td>{{question.writer}}</td>
                             <td>{{question.pub_date}}</td>

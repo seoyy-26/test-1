@@ -14,15 +14,14 @@ def showquestion(requesst):
     # 입력 파라미터
     page = requesst.GET.get('page', '1')  # 페이지
 
-
     # 페이징처리
     paginator = Paginator(questions, 10)  # 페이지당 10개씩 보여주기
     page_obj = paginator.get_page(page)
 
-    context = {'question': page_obj}
+    context = {'question': page_obj,'questions':questions}
     return render(requesst, 'question/question.html', context)
 
-def question_detail(request, question_id):
+def question_detail(request, id): #id로 바꿈
     question = get_object_or_404(Question, pk=id)
     context = {'question': question}
     return render(request, 'question/question_detail.html', context)
@@ -37,7 +36,7 @@ def question_update(request, id):
     update_question.save()
     return redirect('question:question_detail', update_question.id)
 
-def question_create(request, id):
+def question_create(request):
     new_question=Question()
     new_question.title = request.POST['title']
     new_question.category = request.POST['category']
@@ -46,26 +45,6 @@ def question_create(request, id):
     new_question.body = request.POST['body']
     new_question.save()
     return redirect('question:question_detail', new_question.id)
-
-
-@login_required(login_url='common:login')
-def answer_create(request, question_id):
-   
-    question = get_object_or_404(Question, pk=id)
-    if request.method == "POST":
-        form = AnswerForm(request.POST)
-        if form.is_valid():
-            answer = form.save(commit=False)
-            answer.writer = request.user  # 추가한 속성 author 적용
-            answer.create_date = timezone.now()
-            answer.question = question
-            answer.save()
-            return redirect('question:detail', id=id)
-    else:
-        form = AnswerForm()
-    context = {'question': question, 'form': form}
-    return render(request, 'question/question_detail.html', context)
-
 
 @login_required(login_url='common:login')
 def question_new(request):
@@ -83,14 +62,13 @@ def question_new(request):
     context = {'form': form}
     return render(request, 'question/question_new.html', context)
 
-
 @login_required(login_url='common:login')
-def question_edit(request, question_id):
+def question_edit(request, question_id): #question_id -> id
     
-    question = get_object_or_404(Question, pk=id)
+    question = get_object_or_404(Question, pk=question_id)
     if request.user != question.writer:
         messages.error(request, '수정권한이 없습니다')
-        return redirect('question:detail', id=id)
+        return redirect('question:detail', question_id=question.id)
 
     if request.method == "POST":
         form = QuestionForm(request.POST, instance=question)
@@ -99,7 +77,7 @@ def question_edit(request, question_id):
             question.writer = request.user
             question.modify_date = timezone.now()  # 수정일시 저장
             question.save()
-            return redirect('question:detail', id=id)
+            return redirect('question:detail', question_id=question.id)
     else:
         form = QuestionForm(instance=question)
     context = {'form': form}
@@ -109,13 +87,30 @@ def question_edit(request, question_id):
 @login_required(login_url='common:login')
 def question_delete(request, question_id):
     
-    question = get_object_or_404(Question, pk=id)
+    question = get_object_or_404(Question, pk=question_id)
     if request.user != question.writer:
         messages.error(request, '삭제권한이 없습니다')
         return redirect('question:detail', id=id)
     question.delete()
     return redirect('question:showquestion')
-
+#answer
+@login_required(login_url='common:login')
+def answer_create(request, question_id):
+   
+    question = get_object_or_404(Question, pk=id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.writer = request.user  # 추가한 속성 author 적용
+            answer.create_date = timezone.now()
+            answer.question = question
+            answer.save()
+            return redirect('question:detail', id=id)
+    else:
+        form = AnswerForm()
+    context = {'question': question, 'form': form}
+    return render(request, 'question/question_detail.html', context)
 
 @login_required(login_url='common:login')
 def answer_modify(request, answer_id):
@@ -254,11 +249,6 @@ def comment_delete_answer(request, comment_id):
     else:
         comment.delete()
     return redirect('question:detail', id=id)
-
-
-
-
-
 
 
 #동아리별 연결
