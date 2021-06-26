@@ -98,4 +98,12 @@ class Question(models.Model):
 class Answer(models.Model):
     question = models.ForeignKey(Question, on_delete=models.CASCADE)
     body = models.TextField()
-    create_date = models.DateTimeField()
+    pub_date = models.DateTimeField()
+
+
+class Comment(models.Model):
+    writer = models.ForeignKey(User, on_delete=models.CASCADE)
+    body = models.TextField()
+    pub_date = models.DateTimeField(null=True, blank=True)
+    question = models.ForeignKey(Question, null=True, blank=True, on_delete=models.CASCADE)
+    answer = models.ForeignKey(Answer, null=True, blank=True, on_delete=models.CASCADE)

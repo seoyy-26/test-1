@@ -27,7 +27,7 @@
                      {% if user == question.writer %}
                      <a href="{% url 'question:question_edit' question.id %}">수정하기</a>
                      <a href="{% url 'question:question_delete' question.id %}">삭제하기</a>
-                    {% endif %}
+                     {% endif %}
                     <br><br><br><br>
 
                     <h5>{{question.answer_set.count}}개의 답변이 있습니다.</h5>
@@ -39,12 +39,28 @@
                       </ul>
                     </div>
 
+                     <span>
+                      - {{ comment.writer }}, {{ comment.create_date }}
+                      {% if comment.modify_date %}
+                      (수정:{{ comment.modify_date }})
+                      {% endif %}
+                     </span>
+                     {% if request.user == comment.writer %}
+                     <a href="{% url 'question:comment_modify_question' comment.id %}" class="small">수정</a>,
+                     <a href="#" class="small delete" data-uri="{% url 'question:comment_delete_question' comment.id %}">삭제</a>
+                     {% endif %}
+             
+      
+
+                    {% if user == question.writer %}
                     <form action="{% url 'question:answer_create' question.id %}" method="POST">
                       {% csrf_token %} 
                       <textarea name="body" id="body" rows="15"></textarea>
                       <br>
                       <input type="submit" value="답변등록">
                     </form>
+                    {% endif %}
+
 
                 </article>
               <!-- 선택된 select 값 고정 -->

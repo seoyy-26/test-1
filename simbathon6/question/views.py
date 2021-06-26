@@ -1,33 +1,31 @@
 from datetime import time
+from django.contrib import messages
+from django.core.paginator import Paginator
+from django.contrib.auth.decorators import login_required
+from django.db import models
 from django.shortcuts import render, redirect, get_object_or_404
-from .models import Question
+from .models import Answer, Question, Comment
+from .forms import QuestionForm, AnswerForm, CommentForm
 from django.utils import timezone
 # Create your views here.
 
 def showquestion(requesst):
     questions = Question.objects.all()
-    return render(requesst, 'question/question.html',{'questions':questions})
+    # 입력 파라미터
+    page = requesst.GET.get('page', '1')  # 페이지
 
-def question_detail(request,id):
+
+    # 페이징처리
+    paginator = Paginator(questions, 10)  # 페이지당 10개씩 보여주기
+    page_obj = paginator.get_page(page)
+
+    context = {'question': page_obj}
+    return render(requesst, 'question/question.html', context)
+
+def question_detail(request, question_id):
     question = get_object_or_404(Question, pk=id)
-    return render(request, 'question/question_detail.html',{'question':question})
-
-def question_new(request):
-    return render(request, 'question/question_new.html')
-
-def question_create(request):
-    new_question=Question()
-    new_question.title = request.GET['title']
-    new_question.category = request.GET['category']
-    new_question.writer = request.user
-    new_question.pub_date = timezone.now()
-    new_question.body = request.GET['body']
-    new_question.save()
-    return redirect('question:question_detail', new_question.id)
-
-def question_edit(request, id):
-    edit_question = Question.objects.get(id=id)
-    return render(request,'question/question_edit.html', {'question': edit_question})
+    context = {'question': question}
+    return render(request, 'question/question_detail.html', context)
 
 def question_update(request, id):
     update_question=Question()
@@ -39,15 +37,228 @@ def question_update(request, id):
     update_question.save()
     return redirect('question:question_detail', update_question.id)
 
-def question_delete(request, id):
-    delete_question = Question.objects.get(id=id)
-    delete_question.delete()
+def question_create(request, id):
+    new_question=Question()
+    new_question.title = request.POST['title']
+    new_question.category = request.POST['category']
+    new_question.writer = request.user
+    new_question.pub_date = timezone.now()
+    new_question.body = request.POST['body']
+    new_question.save()
+    return redirect('question:question_detail', new_question.id)
+
+
+@login_required(login_url='common:login')
+def answer_create(request, question_id):
+   
+    question = get_object_or_404(Question, pk=id)
+    if request.method == "POST":
+        form = AnswerForm(request.POST)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.writer = request.user  # 추가한 속성 author 적용
+            answer.create_date = timezone.now()
+            answer.question = question
+            answer.save()
+            return redirect('question:detail', id=id)
+    else:
+        form = AnswerForm()
+    context = {'question': question, 'form': form}
+    return render(request, 'question/question_detail.html', context)
+
+
+@login_required(login_url='common:login')
+def question_new(request):
+   
+    if request.method == 'POST':
+        form = QuestionForm(request.POST)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.writer = request.user  # 추가한 속성 author 적용
+            question.create_date = timezone.now()
+            question.save()
+            return redirect('question:showquestion')
+    else:
+        form = QuestionForm()
+    context = {'form': form}
+    return render(request, 'question/question_new.html', context)
+
+
+@login_required(login_url='common:login')
+def question_edit(request, question_id):
+    
+    question = get_object_or_404(Question, pk=id)
+    if request.user != question.writer:
+        messages.error(request, '수정권한이 없습니다')
+        return redirect('question:detail', id=id)
+
+    if request.method == "POST":
+        form = QuestionForm(request.POST, instance=question)
+        if form.is_valid():
+            question = form.save(commit=False)
+            question.writer = request.user
+            question.modify_date = timezone.now()  # 수정일시 저장
+            question.save()
+            return redirect('question:detail', id=id)
+    else:
+        form = QuestionForm(instance=question)
+    context = {'form': form}
+    return render(request, 'question/question_new.html', context)
+
+
+@login_required(login_url='common:login')
+def question_delete(request, question_id):
+    
+    question = get_object_or_404(Question, pk=id)
+    if request.user != question.writer:
+        messages.error(request, '삭제권한이 없습니다')
+        return redirect('question:detail', id=id)
+    question.delete()
     return redirect('question:showquestion')
 
-def answer_create(request, id):
+
+@login_required(login_url='common:login')
+def answer_modify(request, answer_id):
+    
+    answer = get_object_or_404(Answer, pk=id)
+    if request.user != answer.writer:
+        messages.error(request, '수정권한이 없습니다')
+        return redirect('question:detail', id=id)
+
+    if request.method == "POST":
+        form = AnswerForm(request.POST, instance=answer)
+        if form.is_valid():
+            answer = form.save(commit=False)
+            answer.writer = request.user
+            answer.modify_date = timezone.now()
+            answer.save()
+            return redirect('question:detail', id=id)
+    else:
+        form = AnswerForm(instance=answer)
+    context = {'answer': answer, 'form': form}
+    return render(request, 'question/answer_form.html', context)
+
+
+@login_required(login_url='common:login')
+def answer_delete(request, answer_id):
+    
+    answer = get_object_or_404(Answer, pk=id)
+    if request.user != answer.writer:
+        messages.error(request, '삭제권한이 없습니다')
+    else:
+        answer.delete()
+    return redirect('question:detail', id=id)
+
+
+@login_required(login_url='common:login')
+def comment_create_question(request, question_id):
+    
     question = get_object_or_404(Question, pk=id)
-    question.answer_set.create(body=request.POST.get('body'), create_date=timezone.now())
-    return redirect('question:question_detail', id=id)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.writer = request.user
+            comment.create_date = timezone.now()
+            comment.question = question
+            comment.save()
+            return redirect('question:detail', id=id)
+    else:
+        form = CommentForm()
+    context = {'form': form}
+    return render(request, 'question/comment_form.html', context)
+
+
+@login_required(login_url='common:login')
+def comment_modify_question(request, comment_id):
+   
+    comment = get_object_or_404(Comment, pk=id)
+    if request.user != comment.writer:
+        messages.error(request, '댓글수정권한이 없습니다')
+        return redirect('question:detail', id=id)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.writer = request.user
+            comment.modify_date = timezone.now()
+            comment.save()
+            return redirect('question:detail', id=id)
+    else:
+        form = CommentForm(instance=comment)
+    context = {'form': form}
+    return render(request, 'question/comment_form.html', context)
+
+
+@login_required(login_url='common:login')
+def comment_delete_question(request, comment_id):
+    
+    comment = get_object_or_404(Comment, pk=id)
+    if request.user != comment.writer:
+        messages.error(request, '댓글삭제권한이 없습니다')
+        return redirect('question:detail', id=id)
+    else:
+        comment.delete()
+    return redirect('question:detail', id=id)
+
+
+@login_required(login_url='common:login')
+def comment_create_answer(request, answer_id):
+    
+    answer = get_object_or_404(Answer, pk=id)
+    if request.method == "POST":
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.writer = request.user
+            comment.create_date = timezone.now()
+            comment.answer = answer
+            comment.save()
+            return redirect('question:detail', id=id)
+    else:
+        form = CommentForm()
+    context = {'form': form}
+    return render(request, 'question/comment_form.html', context)
+
+
+@login_required(login_url='common:login')
+def comment_modify_answer(request, comment_id):
+   
+    comment = get_object_or_404(Comment, pk=id)
+    if request.user != comment.writer:
+        messages.error(request, '댓글수정권한이 없습니다')
+        return redirect('question:detail', id=id)
+
+    if request.method == "POST":
+        form = CommentForm(request.POST, instance=comment)
+        if form.is_valid():
+            comment = form.save(commit=False)
+            comment.writer = request.user
+            comment.modify_date = timezone.now()
+            comment.save()
+            return redirect('question:detail', id=id)
+    else:
+        form = CommentForm(instance=comment)
+    context = {'form': form}
+    return render(request, 'question/comment_form.html', context)
+
+
+@login_required(login_url='common:login')
+def comment_delete_answer(request, comment_id):
+   
+    comment = get_object_or_404(Comment, pk=id)
+    if request.user != comment.writer:
+        messages.error(request, '댓글삭제권한이 없습니다')
+        return redirect('question:detail', id=id)
+    else:
+        comment.delete()
+    return redirect('question:detail', id=id)
+
+
+
+
+
 
 
 #동아리별 연결
